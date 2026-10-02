@@ -1,0 +1,9 @@
+﻿# Purpose: Shows whether the local account named Administrator is enabled and includes an optional command to disable it.
+# Run: Paste this file into elevated 64-bit PowerShell and uncomment the disable command only when that change is intended.
+
+Get-LocalUser -Name "Administrator" | Select-Object Name, Enabled
+
+# Enabled = True means enabled; Enabled = False means disabled.
+# This name-based lookup must be adjusted if the built-in Administrator account was renamed.
+# Optional change: remove the leading comment marker to disable this account.
+# Disable-LocalUser -Name "Administrator"

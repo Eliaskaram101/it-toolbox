@@ -1,0 +1,10 @@
+﻿REM Purpose: Deletes accessible files from the current user's temporary folder and the Windows temporary folder.
+REM Run: Close applications and paste this file into Command Prompt opened as administrator under the intended user account.
+
+REM Files currently in use may remain and produce access-denied messages.
+del /q /f /s "%TEMP%\*"
+del /q /f /s "%windir%\Temp\*"
+
+REM Optional inspection: remove REM from either line to open that folder in File Explorer.
+REM start "" "%TEMP%"
+REM start "" "%windir%\Temp"

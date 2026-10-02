@@ -1,0 +1,7 @@
+﻿REM Purpose: Checks and repairs the running Windows component store with DISM, then scans and repairs protected system files with SFC.
+REM Run: Open Command Prompt as administrator and run each command in order after the previous command finishes.
+
+DISM /Online /Cleanup-Image /CheckHealth
+DISM /Online /Cleanup-Image /ScanHealth
+DISM /Online /Cleanup-Image /RestoreHealth
+sfc /scannow

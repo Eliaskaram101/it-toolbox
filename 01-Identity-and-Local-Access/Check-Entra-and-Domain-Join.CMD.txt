@@ -1,0 +1,4 @@
+﻿REM Purpose: Shows this device's Entra ID and domain join status along with user registration and SSO details.
+REM Run: Open Command Prompt as the affected signed-in user and paste this entire file.
+
+dsregcmd /status

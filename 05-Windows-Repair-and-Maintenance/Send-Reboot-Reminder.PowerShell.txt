@@ -1,0 +1,14 @@
+﻿# Purpose: Sends a reboot reminder to the active user session selected from quser output without restarting the computer.
+# Run: Open Windows PowerShell 5.1 as administrator, verify the selected quser session ID, and run this file one section at a time.
+
+# This message does not check whether a reboot is actually pending.
+# Session parsing assumes a particular English quser column layout; verify the session ID before sending.
+# Get the active user session ID
+$session = (quser | Where-Object { $_ -match "Active" }) -split '\s+'
+$sessionId = $session[2]
+
+# Reboot reminder message
+$msg = "🛑 Your computer is pending a reboot to apply security patches. Please restart your computer at the end of your workday so system updates can be applied to your machine."
+
+# Send the popup to the active user session
+Start-Process "msg.exe" -ArgumentList "$sessionId `"$msg`"" -WindowStyle Hidden

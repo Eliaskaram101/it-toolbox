@@ -1,0 +1,4 @@
+﻿# Purpose: Displays the manufacturer and model reported by the local computer.
+# Run: Open PowerShell and paste this entire file.
+
+Get-CimInstance -ClassName Win32_ComputerSystem | Select-Object Manufacturer, Model

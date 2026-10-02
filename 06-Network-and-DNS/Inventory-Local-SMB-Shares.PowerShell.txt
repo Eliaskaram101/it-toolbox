@@ -1,0 +1,6 @@
+﻿# Purpose: Lists SMB shares hosted by the local computer with their backing paths and descriptions.
+# Run: Open PowerShell as administrator on the computer hosting the shares and paste this entire file.
+
+# Standard administrative shares can appear alongside departmental or application shares.
+# This lists shares, not their share permissions or NTFS permissions.
+Get-SmbShare | Select-Object Name,Path,Description

@@ -1,0 +1,4 @@
+﻿REM Purpose: Starts classic Outlook in safe mode for troubleshooting.
+REM Run: Press Windows + R and enter only outlook.exe /safe, or paste this entire file into Command Prompt.
+
+outlook.exe /safe

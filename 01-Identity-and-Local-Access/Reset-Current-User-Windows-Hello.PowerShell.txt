@@ -1,0 +1,4 @@
+﻿# Purpose: Deletes the current user's Windows Hello container, including its PIN and associated Hello credentials and keys.
+# Run: Open PowerShell as the affected user, paste this entire file, and sign out afterward before setting up Windows Hello again.
+
+certutil -deletehellocontainer

@@ -1,0 +1,7 @@
+﻿# Purpose: Updates Microsoft Defender antimalware signatures and displays their last update time and version.
+# Run: Open PowerShell as administrator on a device using Microsoft Defender Antivirus and paste this entire file.
+
+Update-MpSignature
+
+# Display the last signature update time and version.
+Get-MpComputerStatus | Select-Object AntispywareSignatureLastUpdated, AntispywareSignatureVersion

@@ -1,0 +1,6 @@
+﻿REM Purpose: Invokes the OOBE network-requirement bypass script if it is available on the installed Windows build.
+REM Run: During Windows setup, press Shift + F10 to open Command Prompt and paste this file only if the bypass script is available and the restart is intended.
+
+REM Availability and effectiveness vary by Windows build; this is not a universal setup method.
+REM This script normally restarts the computer during OOBE.
+oobe\bypassnro

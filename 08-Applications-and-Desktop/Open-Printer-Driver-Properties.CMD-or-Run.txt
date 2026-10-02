@@ -1,0 +1,4 @@
+﻿REM Purpose: Opens Print Server Properties on the Drivers tab.
+REM Run: Press Windows + R and enter only printui.exe /s /t2, or paste this entire file into Command Prompt.
+
+printui.exe /s /t2

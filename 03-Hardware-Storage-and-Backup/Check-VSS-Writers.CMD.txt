@@ -1,0 +1,4 @@
+﻿REM Purpose: Lists Volume Shadow Copy Service writers and their current state and last reported error.
+REM Run: Open Command Prompt as administrator and paste this entire file.
+
+vssadmin list writers

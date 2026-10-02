@@ -1,0 +1,4 @@
+﻿# Purpose: Displays volume drive letters, labels, reported health, free space, and total capacity in GB.
+# Run: Open PowerShell as administrator and paste this entire file on the computer being checked.
+
+Get-Volume | Select-Object DriveLetter,FileSystemLabel,HealthStatus,@{Name="FreeGB";Expression={[math]::Round($_.SizeRemaining/1GB,2)}},@{Name="TotalGB";Expression={[math]::Round($_.Size/1GB,2)}}

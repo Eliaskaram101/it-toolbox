@@ -1,0 +1,6 @@
+﻿# Purpose: Lists listening TCP addresses and ports with the process ID that owns each listener.
+# Run: Open PowerShell as administrator and paste this entire file on the computer being investigated.
+
+# A listener is not proof that its port is reachable remotely through the firewall.
+# OwningProcess is a process ID that can be matched to the corresponding running process.
+Get-NetTCPConnection -State Listen | Select-Object LocalAddress,LocalPort,OwningProcess

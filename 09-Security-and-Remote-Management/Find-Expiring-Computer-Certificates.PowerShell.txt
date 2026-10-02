@@ -1,0 +1,6 @@
+﻿# Purpose: Lists expired certificates and certificates expiring within 30 days in the local computer's Personal certificate store.
+# Run: Open Windows PowerShell 5.1 or PowerShell 7.1 or newer on Windows and paste this entire file.
+
+# This checks LocalMachine\My only; certificates in other stores are not included.
+# Verify that a certificate is actively used before treating its expiration as an operational problem.
+Get-ChildItem Cert:\LocalMachine\My -ExpiringInDays 30 | Select-Object Subject,NotAfter,Thumbprint

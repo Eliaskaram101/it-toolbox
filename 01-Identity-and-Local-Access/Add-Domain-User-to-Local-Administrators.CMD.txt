@@ -1,0 +1,4 @@
+﻿REM Purpose: Adds the specified Active Directory domain user to this computer's local Administrators group.
+REM Run: Replace DOMAIN and user with the intended account, then paste this file into Command Prompt opened as administrator.
+
+net localgroup Administrators DOMAIN\user /add

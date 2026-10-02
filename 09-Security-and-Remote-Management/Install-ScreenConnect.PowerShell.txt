@@ -1,0 +1,138 @@
+﻿# Purpose: Downloads and silently installs a ScreenConnect client from a supplied installer URL while writing installation logs.
+# Run: Save this file as Install-ScreenConnect.ps1 and run it from elevated PowerShell using .\Install-ScreenConnect.ps1 -InstallerUrl 'YOUR_APPROVED_MSI_URL'.
+
+#requires -RunAsAdministrator
+
+<#
+.SYNOPSIS
+Downloads and silently installs a ScreenConnect / ConnectWise Control client MSI.
+
+.NOTES
+- Provide the approved ScreenConnect MSI URL through the InstallerUrl parameter.
+- Intended for authorized deployment through a management platform or manual admin execution.
+- Uses msiexec for a quiet install.
+- Writes installer log to C:\Windows\Temp
+#>
+
+[CmdletBinding()]
+param(
+    [Parameter(Mandatory=$true)]
+    [ValidateNotNullOrEmpty()]
+    [string]$InstallerUrl,
+    [string]$DownloadPath = "$env:TEMP\ScreenConnect.ClientSetup.msi",
+    [string]$LogPath = "C:\Windows\Temp\ScreenConnect_Install.log"
+)
+
+$ErrorActionPreference = 'Stop'
+
+function Write-Log {
+    param(
+        [string]$Message,
+        [string]$Level = 'INFO'
+    )
+
+    $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+    $line = "[$timestamp] [$Level] $Message"
+    Write-Host $line
+    Add-Content -Path $LogPath -Value $line
+}
+
+function Test-IsAdministrator {
+    $currentIdentity = [Security.Principal.WindowsIdentity]::GetCurrent()
+    $principal = New-Object Security.Principal.WindowsPrincipal($currentIdentity)
+    return $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+try {
+    if (-not (Test-IsAdministrator)) {
+        throw "This script must be run as Administrator."
+    }
+
+    if (-not (Test-Path -Path (Split-Path $LogPath -Parent))) {
+        New-Item -ItemType Directory -Path (Split-Path $LogPath -Parent) -Force | Out-Null
+    }
+
+    if (Test-Path $LogPath) {
+        Remove-Item $LogPath -Force -ErrorAction SilentlyContinue
+    }
+
+    Write-Log "Starting ScreenConnect install."
+
+    # Ensure TLS 1.2 for download compatibility
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+    $downloadFolder = Split-Path $DownloadPath -Parent
+    if (-not (Test-Path $downloadFolder)) {
+        New-Item -ItemType Directory -Path $downloadFolder -Force | Out-Null
+    }
+
+    Write-Log "Downloading installer from: $InstallerUrl"
+    Invoke-WebRequest -Uri $InstallerUrl -OutFile $DownloadPath -UseBasicParsing
+
+    if (-not (Test-Path $DownloadPath)) {
+        throw "Installer download failed. File not found at $DownloadPath"
+    }
+
+    $fileInfo = Get-Item $DownloadPath
+    if ($fileInfo.Length -le 0) {
+        throw "Downloaded installer file is empty."
+    }
+
+    Write-Log "Download complete: $DownloadPath ($($fileInfo.Length) bytes)"
+
+    $msiLogPath = "C:\Windows\Temp\ScreenConnect_MSI.log"
+    if (Test-Path $msiLogPath) {
+        Remove-Item $msiLogPath -Force -ErrorAction SilentlyContinue
+    }
+
+    $arguments = @(
+        "/i"
+        "`"$DownloadPath`""
+        "/qn"
+        "/norestart"
+        "/L*v"
+        "`"$msiLogPath`""
+    ) -join ' '
+
+    Write-Log "Launching msiexec with silent install."
+    $process = Start-Process -FilePath "msiexec.exe" -ArgumentList $arguments -Wait -PassThru -WindowStyle Hidden
+
+    Write-Log "msiexec exited with code: $($process.ExitCode)"
+
+    switch ($process.ExitCode) {
+        0 {
+            Write-Log "Installation completed successfully."
+        }
+        3010 {
+            Write-Log "Installation succeeded. Reboot required." "WARN"
+        }
+        default {
+            throw "Installation failed with exit code $($process.ExitCode). Review MSI log: $msiLogPath"
+        }
+    }
+
+    # Optional light verification: check for ScreenConnect-related service
+    $service = Get-Service | Where-Object {
+        $_.Name -like "*ScreenConnect*" -or $_.DisplayName -like "*ScreenConnect*" -or $_.DisplayName -like "*ConnectWise Control*"
+    } | Select-Object -First 1
+
+    if ($service) {
+        Write-Log "Detected service: $($service.Name) / $($service.DisplayName) / Status: $($service.Status)"
+    }
+    else {
+        Write-Log "No ScreenConnect-related service was detected after install. The MSI may still have installed successfully; verify in Programs and Features or check the MSI log." "WARN"
+    }
+
+    Write-Log "ScreenConnect install script finished successfully."
+    exit $process.ExitCode
+}
+catch {
+    Write-Log $_.Exception.Message "ERROR"
+    exit 1
+}
+finally {
+    # Optional cleanup: uncomment if you want to remove the downloaded MSI after install
+    # if (Test-Path $DownloadPath) {
+    #     Remove-Item $DownloadPath -Force -ErrorAction SilentlyContinue
+    # }
+}

@@ -1,0 +1,9 @@
+﻿REM Purpose: Resets the current user's OneDrive sync client using its per-user installation path.
+REM Run: Press Windows + R and enter only the first command line, or paste this entire file into Command Prompt as the affected user.
+
+"%localappdata%\Microsoft\OneDrive\onedrive.exe" /reset
+
+REM If that executable is missing, use ONE matching installed path below instead.
+REM "C:\Program Files\Microsoft OneDrive\onedrive.exe" /reset
+REM "C:\Program Files (x86)\Microsoft OneDrive\onedrive.exe" /reset
+REM Reopen OneDrive from Start after the reset if it does not restart automatically.

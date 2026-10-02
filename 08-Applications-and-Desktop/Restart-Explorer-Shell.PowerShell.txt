@@ -1,0 +1,4 @@
+﻿# Purpose: Stops and relaunches the current user's Windows Explorer shell.
+# Run: Paste this entire file into a normal unelevated PowerShell window in the affected user's desktop session.
+
+Stop-Process -Name explorer -Force; Start-Process explorer

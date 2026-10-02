@@ -1,0 +1,5 @@
+﻿# Purpose: Lists machine-wide program names, versions, and publishers from the 64-bit and 32-bit uninstall registry entries.
+# Run: Open 64-bit PowerShell on a 64-bit Windows computer and paste this entire file.
+
+# This covers machine-wide desktop program registrations, not every Store app or per-user installation.
+Get-ItemProperty "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*","HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*" | Where-Object DisplayName | Select-Object DisplayName,DisplayVersion,Publisher | Sort-Object DisplayName

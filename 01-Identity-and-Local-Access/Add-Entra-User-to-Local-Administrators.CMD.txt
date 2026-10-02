@@ -1,0 +1,4 @@
+﻿REM Purpose: Adds the specified Entra ID user to this computer's local Administrators group.
+REM Run: Replace user@example.com with the intended sign-in UPN, then paste this file into Command Prompt opened as administrator on the Entra-joined device.
+
+net localgroup Administrators "AzureAD\user@example.com" /add

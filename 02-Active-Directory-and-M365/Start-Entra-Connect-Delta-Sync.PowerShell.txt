@@ -1,0 +1,6 @@
+﻿# Purpose: Requests a delta synchronization cycle from the local Microsoft Entra Connect synchronization engine.
+# Run: Open Windows PowerShell 5.1 as administrator on the Entra Connect Sync server and paste this entire file.
+
+# Requires Microsoft Entra Connect Sync and permission to operate its synchronization engine.
+Import-Module ADSync
+Start-ADSyncSyncCycle -PolicyType Delta

@@ -1,0 +1,6 @@
+﻿# Purpose: Displays Microsoft Defender's operating mode, antivirus state, real-time protection state, and last antivirus signature update.
+# Run: Open PowerShell as administrator on a device with the Defender module available and paste this entire file.
+
+# Interpret Defender's mode and protection flags alongside the client's deployed antivirus configuration.
+# This does not report Webroot protection status or establish complete endpoint security health.
+Get-MpComputerStatus | Select-Object AMRunningMode,AntivirusEnabled,RealTimeProtectionEnabled,AntivirusSignatureLastUpdated

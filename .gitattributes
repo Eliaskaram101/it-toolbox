@@ -1,0 +1,7 @@
+# Preserve exact bytes of references and their SHA-256 manifest.
+*.txt -text
+*.csv -text
+*.md text eol=lf
+*.ps1 -text
+.gitignore text eol=lf
+.gitattributes text eol=lf

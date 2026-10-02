@@ -1,0 +1,5 @@
+﻿# Purpose: Lists the ten processes with the largest current working sets and displays their memory values in MB.
+# Run: Open PowerShell and paste this entire file while the memory problem is occurring.
+
+# Working-set values are a point-in-time view and can include shared memory pages.
+Get-Process | Sort-Object WorkingSet64 -Descending | Select-Object -First 10 Name,Id,@{Name="RAM_MB";Expression={[math]::Round($_.WorkingSet64/1MB,1)}}

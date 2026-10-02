@@ -1,0 +1,5 @@
+﻿# Purpose: Generates an HTML SleepStudy report for supported Modern Standby systems.
+# Run: Open PowerShell as administrator in a writable working folder and paste this entire file.
+
+# SleepStudy is intended for supported Modern Standby hardware.
+powercfg /sleepstudy

@@ -1,0 +1,5 @@
+﻿# Purpose: Lists physical disk names, reported HDD or SSD media types, sizes, and serial numbers.
+# Run: Open PowerShell as administrator and paste this entire file.
+
+# MediaType can be Unspecified, especially behind some storage controllers.
+Get-PhysicalDisk | Select-Object FriendlyName, MediaType, Size, SerialNumber

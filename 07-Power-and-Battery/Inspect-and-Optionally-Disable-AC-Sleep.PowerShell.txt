@@ -1,0 +1,8 @@
+﻿# Purpose: Displays the active plan's sleep timeout settings and includes an optional command to disable idle sleep on AC power.
+# Run: Paste this file into PowerShell and uncomment the AC timeout command only when disabling idle sleep is intended.
+
+powercfg -query SCHEME_CURRENT SUB_SLEEP STANDBYIDLE
+
+# Optional change: a timeout of 0 means Never for idle sleep while plugged in.
+# This does not change the battery/DC timeout or override organizational policy.
+# powercfg /change standby-timeout-ac 0

@@ -1,0 +1,5 @@
+﻿REM Purpose: Checks drive C for file-system errors and unreadable sectors while requesting repair and recovery of readable data.
+REM Run: Paste this file into Command Prompt opened as administrator and accept scheduling only if the required restart is intended.
+
+REM A system-drive scan normally must be scheduled for the next restart and can take a long time.
+chkdsk C: /f /r

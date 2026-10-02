@@ -1,0 +1,6 @@
+﻿REM Purpose: Runs verbose domain controller diagnostics and saves the output to C:\Reports\DCDiag_Report.txt.
+REM Run: Open Command Prompt as administrator on the intended domain controller and paste this entire file.
+
+REM Create the output directory before redirecting diagnostic output into it.
+if not exist "C:\Reports" mkdir "C:\Reports"
+dcdiag /v > "C:\Reports\DCDiag_Report.txt"

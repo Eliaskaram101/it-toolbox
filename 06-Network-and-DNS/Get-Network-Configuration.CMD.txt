@@ -1,0 +1,4 @@
+﻿REM Purpose: Displays detailed adapter addressing, gateways, DNS servers, DHCP information, and DNS suffixes.
+REM Run: Open Command Prompt and paste this entire file on the affected computer.
+
+ipconfig /all

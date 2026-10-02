@@ -1,0 +1,4 @@
+﻿REM Purpose: Queries the DNS TXT records published at the specified domain name.
+REM Run: Replace example.com with the intended domain, then paste this entire file into Command Prompt.
+
+nslookup -type=TXT example.com

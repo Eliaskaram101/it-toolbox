@@ -1,0 +1,6 @@
+﻿REM Purpose: Opens Windows Memory Diagnostic to schedule a memory test that runs after a restart.
+REM Run: Press Windows + R and enter only mdsched.exe, or paste this entire file into Command Prompt, then choose the intended restart option.
+
+mdsched.exe
+
+REM After the test, check Event Viewer under Windows Logs, System for MemoryDiagnostics-Results.

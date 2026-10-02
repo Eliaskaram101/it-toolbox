@@ -1,0 +1,4 @@
+﻿REM Purpose: Lists interactive user sessions with session IDs, active or disconnected states, idle times, and logon times.
+REM Run: Open Command Prompt as administrator and paste this entire file to inspect sessions on the local computer.
+
+quser

@@ -1,0 +1,4 @@
+﻿# Purpose: Lists Windows service names, states, startup modes, service accounts, and executable paths.
+# Run: Open PowerShell as administrator and paste this entire file on the computer being assessed.
+
+Get-CimInstance Win32_Service | Select-Object Name,State,StartMode,StartName,PathName

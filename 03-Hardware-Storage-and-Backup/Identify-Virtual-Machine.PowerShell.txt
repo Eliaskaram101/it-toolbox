@@ -1,0 +1,14 @@
+﻿# Purpose: Uses the reported computer model to estimate whether Windows is running inside a virtual machine.
+# Run: Open PowerShell and paste this entire file.
+
+# Model matching is a heuristic and does not identify every hypervisor or customized VM.
+$computerSystem = Get-CimInstance -ClassName Win32_ComputerSystem
+
+if ($computerSystem.Model -match "Virtual|VMware|KVM|HVM|Xen|Hyper-V") {
+    Write-Host "This system appears to be running on a virtual machine."
+} else {
+    Write-Host "No known VM model pattern was found; verify before classifying this as physical hardware."
+}
+
+Write-Host "Manufacturer: $($computerSystem.Manufacturer)"
+Write-Host "Model:        $($computerSystem.Model)"

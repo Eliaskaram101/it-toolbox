@@ -1,0 +1,4 @@
+﻿REM Purpose: Queries the DNS TXT record at a domain's _dmarc name.
+REM Run: Replace example.com with the intended domain, then paste this entire file into Command Prompt.
+
+nslookup -type=TXT _dmarc.example.com

@@ -1,0 +1,5 @@
+﻿# Purpose: Displays the health and operational status that Windows reports for each visible physical disk.
+# Run: Open PowerShell as administrator and paste this entire file.
+
+# These fields are Windows storage-provider status, not a complete SMART or RAID health assessment.
+Get-PhysicalDisk | Select-Object FriendlyName, HealthStatus, OperationalStatus

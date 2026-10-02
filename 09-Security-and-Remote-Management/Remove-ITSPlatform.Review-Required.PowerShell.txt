@@ -1,0 +1,74 @@
+﻿# Purpose: Attempts to stop, uninstall, and remove ITSPlatform components that match the configured names and installation paths.
+# Run: Verify the exact installed component names and uninstall strings, save this file as Remove-ITSPlatform.ps1, then run it with elevated Windows PowerShell.
+
+# Target review: verify exact agent services, processes, and uninstall entries before removal.
+# Name patterns match ITSPlatform; components with other names require explicit verification.
+# This script suppresses some errors, so the final message does not prove that every component was removed.
+# ================================
+# ITSPlatform Removal Attempt - Target Review Required
+# ================================
+
+Write-Host "Starting ITSPlatform removal..." -ForegroundColor Cyan
+
+# --- VARIABLES ---
+$ServiceNamePattern = "ITSPlatform"
+$ProcessNamePattern = "ITSPlatform"
+$InstallPaths = @(
+    "C:\Program Files\ITSPlatform",
+    "C:\Program Files (x86)\ITSPlatform",
+    "C:\ITSPlatform",
+    "C:\ProgramData\ITSPlatform"
+)
+
+# --- STOP SERVICES ---
+Write-Host "Checking for ITS services..." -ForegroundColor Yellow
+Get-Service | Where-Object { $_.Name -like "*$ServiceNamePattern*" } | ForEach-Object {
+    Write-Host "Stopping service: $($_.Name)"
+    if ($_.Status -ne "Stopped") {
+        Stop-Service -Name $_.Name -Force -ErrorAction SilentlyContinue
+    }
+    sc.exe delete $_.Name | Out-Null
+    Write-Host "Deleted service: $($_.Name)"
+}
+
+# --- KILL PROCESSES ---
+Write-Host "Checking for ITS processes..." -ForegroundColor Yellow
+Get-Process | Where-Object { $_.ProcessName -like "*$ProcessNamePattern*" } | ForEach-Object {
+    Write-Host "Killing process: $($_.ProcessName)"
+    Stop-Process -Id $_.Id -Force -ErrorAction SilentlyContinue
+}
+
+# --- UNINSTALL VIA REGISTRY ---
+Write-Host "Checking registry uninstall entries..." -ForegroundColor Yellow
+$UninstallPaths = @(
+    "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*",
+    "HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*"
+)
+
+foreach ($path in $UninstallPaths) {
+    Get-ItemProperty $path -ErrorAction SilentlyContinue | Where-Object {
+        $_.DisplayName -like "*ITSPlatform*"
+    } | ForEach-Object {
+        Write-Host "Uninstalling: $($_.DisplayName)"
+        if ($_.UninstallString) {
+            $UninstallCmd = $_.UninstallString
+            if ($UninstallCmd -like "*msiexec*") {
+                $UninstallCmd = $UninstallCmd -replace "/I", "/X"
+                Start-Process "cmd.exe" -ArgumentList "/c $UninstallCmd /quiet /norestart" -Wait
+            } else {
+                Start-Process "cmd.exe" -ArgumentList "/c $UninstallCmd" -Wait
+            }
+        }
+    }
+}
+
+# --- REMOVE INSTALL FOLDERS ---
+Write-Host "Removing installation directories..." -ForegroundColor Yellow
+foreach ($path in $InstallPaths) {
+    if (Test-Path $path) {
+        Write-Host "Deleting $path"
+        Remove-Item -Path $path -Recurse -Force -ErrorAction SilentlyContinue
+    }
+}
+
+Write-Host "ITSPlatform removal attempt finished; verify uninstall results and remaining components." -ForegroundColor Yellow

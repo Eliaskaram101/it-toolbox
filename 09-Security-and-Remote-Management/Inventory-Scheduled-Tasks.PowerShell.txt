@@ -1,0 +1,5 @@
+﻿# Purpose: Lists scheduled task folders, task names, and current task states.
+# Run: Open PowerShell as administrator and paste this entire file to inspect local scheduled tasks.
+
+# This is an inventory; review a selected task's actions and triggers separately when needed.
+Get-ScheduledTask | Select-Object TaskPath,TaskName,State

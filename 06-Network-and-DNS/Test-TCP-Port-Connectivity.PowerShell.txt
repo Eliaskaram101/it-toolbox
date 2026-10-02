@@ -1,0 +1,6 @@
+﻿# Purpose: Tests whether the specified server accepts a TCP connection on port 445 and displays connection diagnostics.
+# Run: Replace server01 with the target hostname or IP and adjust the port if needed, then paste this entire file into PowerShell.
+
+# Port 445 is the example for SMB; use the TCP port of the service being investigated.
+# A successful TCP connection does not prove authentication or access to the application or share.
+Test-NetConnection -ComputerName server01 -Port 445

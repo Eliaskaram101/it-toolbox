@@ -1,0 +1,4 @@
+﻿# Purpose: Displays the serial number reported by the device BIOS.
+# Run: Open PowerShell and paste this entire file.
+
+Get-CimInstance Win32_BIOS | Select-Object SerialNumber

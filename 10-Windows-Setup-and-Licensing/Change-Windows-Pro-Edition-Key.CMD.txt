@@ -1,0 +1,7 @@
+﻿REM Purpose: Invokes the Windows product-key change tool with the generic Pro edition key without upgrading Windows 10 to Windows 11 or supplying a Pro license.
+REM Run: Verify the supported edition-change method and a valid Pro license, then paste this file into Command Prompt opened as administrator.
+
+REM The generic edition key below is not an activation license.
+REM For Home to Pro, use the supported Change product key flow in Windows Activation settings.
+REM Supported edition paths and restart requirements depend on the current Windows edition.
+changepk.exe /ProductKey VK7JG-NPHTM-C97JM-9MPGT-3V66T

@@ -1,0 +1,16 @@
+﻿# Purpose: Queries the configured Windows Update source and lists applicable software updates that are not installed.
+# Run: Open Windows PowerShell 5.1 as administrator and paste this entire file.
+
+# Create the update session and searcher
+$UpdateSession = New-Object -ComObject Microsoft.Update.Session
+$UpdateSearcher = $UpdateSession.CreateUpdateSearcher()
+
+# Uses the machine's configured update source; this query does not install updates.
+# Search for missing updates
+$SearchResult = $UpdateSearcher.Search("IsInstalled=0 and Type='Software'")
+
+# Output results
+Write-Host "Found $($SearchResult.Updates.Count) applicable updates.`n"
+foreach ($update in $SearchResult.Updates) {
+    Write-Host "Title: $($update.Title)"
+}

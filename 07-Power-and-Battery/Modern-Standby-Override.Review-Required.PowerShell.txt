@@ -1,0 +1,9 @@
+﻿# Purpose: Lists available sleep states and contains the PlatformAoAcOverride registry command intended to disable Modern Standby.
+# Run: Open PowerShell as administrator, verify device support, and uncomment the registry command only if this workaround and a later restart are intended.
+
+powercfg /a
+
+# Hardware and Windows build determine whether this override has any useful effect.
+# It does not create S3 support on hardware that lacks it.
+# Optional compatibility-dependent change; a restart is required to evaluate the result.
+# reg add HKLM\SYSTEM\CurrentControlSet\Control\Power /v PlatformAoAcOverride /t REG_DWORD /d 0 /f

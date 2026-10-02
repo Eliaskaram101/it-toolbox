@@ -1,0 +1,5 @@
+﻿# Purpose: Generates an HTML battery usage and capacity report and prints the saved report path.
+# Run: Open PowerShell in a writable working folder and paste this entire file.
+
+# Battery information depends on the battery hardware and data exposed by the device.
+powercfg /batteryreport

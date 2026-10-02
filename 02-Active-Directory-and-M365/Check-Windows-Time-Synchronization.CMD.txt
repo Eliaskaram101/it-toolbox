@@ -1,0 +1,5 @@
+﻿REM Purpose: Displays the Windows Time service synchronization status, time source, and last successful synchronization.
+REM Run: Open Command Prompt as administrator and paste this entire file on the computer being checked.
+
+REM The Windows Time service must be running for this query to succeed.
+w32tm /query /status

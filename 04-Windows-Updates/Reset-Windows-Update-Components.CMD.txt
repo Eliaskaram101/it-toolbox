@@ -1,0 +1,20 @@
+﻿REM Purpose: Stops Windows Update services, renames the update cache folders for recovery, and starts the services again.
+REM Run: Open Command Prompt as administrator and run this file one section at a time while checking the service and rename results.
+
+REM Run these commands in Command Prompt.
+REM Close update installers before starting and verify each service has stopped.
+net stop wuauserv
+net stop cryptSvc
+net stop bits
+net stop msiserver
+
+REM If either .old folder already exists, use a different unused backup name before running its rename.
+REM Renaming preserves the old cache contents rather than deleting them.
+ren "%windir%\SoftwareDistribution" SoftwareDistribution.old
+ren "%windir%\System32\catroot2" catroot2.old
+
+REM Restart these services even if a preceding rename fails.
+net start wuauserv
+net start cryptSvc
+net start bits
+net start msiserver

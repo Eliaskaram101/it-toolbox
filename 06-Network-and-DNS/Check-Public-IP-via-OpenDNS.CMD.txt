@@ -1,0 +1,4 @@
+﻿REM Purpose: Queries an OpenDNS resolver to display the public source IP address that resolver observes.
+REM Run: Open Command Prompt with DNS access to the OpenDNS resolver and paste this entire file.
+
+nslookup myip.opendns.com. resolver1.opendns.com

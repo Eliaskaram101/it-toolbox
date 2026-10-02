@@ -1,0 +1,6 @@
+﻿REM Purpose: Exports resultant Group Policy for the computer and queried user to an HTML report in the current temporary folder.
+REM Run: Open Command Prompt as administrator and paste this entire file, then open GPO-Results.html from the temporary folder.
+
+REM The user section reflects the account being queried; running as another administrator can change that user context.
+REM The /f option overwrites an existing report with the same name.
+gpresult /h "%TEMP%\GPO-Results.html" /f

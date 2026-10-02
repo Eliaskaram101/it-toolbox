@@ -1,0 +1,4 @@
+﻿# Purpose: Sets RemoteSigned execution policy for the current PowerShell process only.
+# Run: Paste this entire file into the same PowerShell window that will run the intended scripts.
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force

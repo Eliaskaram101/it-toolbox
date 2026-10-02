@@ -1,0 +1,8 @@
+﻿# Purpose: Lists installed Windows CBS hotfixes with known installation dates, ordered from newest to oldest.
+# Run: Open PowerShell and paste this entire file.
+
+# This is a CBS hotfix list, not the complete Windows Update history.
+Get-HotFix |
+    Where-Object { $_.InstalledOn } |
+    Sort-Object -Property InstalledOn -Descending |
+    Select-Object Description, HotFixID, InstalledOn

@@ -1,0 +1,4 @@
+﻿REM Purpose: Lists user accounts in the computer's Active Directory domain rather than accounts stored only on this machine.
+REM Run: Open Command Prompt on a domain-joined computer with domain connectivity and paste this entire file.
+
+net user /domain

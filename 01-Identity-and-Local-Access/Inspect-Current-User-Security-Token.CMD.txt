@@ -1,0 +1,5 @@
+﻿REM Purpose: Displays the current account, SID, group memberships, and privileges in its security token.
+REM Run: Open Command Prompt in the affected user's normal session and paste this entire file.
+
+REM Elevating the shell or using another account changes the token being inspected.
+whoami /all

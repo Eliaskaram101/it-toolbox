@@ -1,0 +1,5 @@
+﻿REM Purpose: Displays BitLocker encryption, protection, and lock status for the computer's volumes.
+REM Run: Open Command Prompt as administrator on a device with BitLocker management available and paste this entire file.
+
+REM Review both encryption status and protection status when assessing each volume.
+manage-bde -status

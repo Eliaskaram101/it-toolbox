@@ -1,0 +1,7 @@
+﻿# Purpose: Installs and imports the Exchange Online PowerShell module, then opens an interactive Exchange Online sign-in.
+# Run: Open PowerShell with internet access, paste this entire file, and sign in with an account authorized for the intended tenant.
+
+Set-ExecutionPolicy RemoteSigned -Scope Process
+Install-Module -Name ExchangeOnlineManagement -Scope CurrentUser -Force
+Import-Module ExchangeOnlineManagement
+Connect-ExchangeOnline
